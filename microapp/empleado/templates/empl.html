@@ -1,0 +1,74 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>crud empleados</title>
+    <link rel="stylesheet" href="">
+</head>
+<body>
+    <h1>empleados</h1>
+    <form action="/empleados/new/" method="POST" >
+        {% csrf_token %}
+        <h1>empleados</h1>
+        <input type="int" name="codigo" placeholder="Esribe tu codigo">
+        <input type="text" name="nif" placeholder="Esribe tu nif">
+        <input type="text" name="nombre" placeholder="Esribe tu nombre">
+        <input type="text" name="apellido_1" placeholder="Esribe tu primer apellido">
+        <input type="text" name="apellid_2" placeholder="Esribe tu segundo apellido">
+        <input type="int" name="codigo_departamento" placeholder="Esribe tu codigo de apartamento">
+        <button>Guardar</button>
+    </form>
+
+    {% for empleado in Empleado%}
+    <div>
+        <table class="table table-sm">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Codigo       </th>
+                <th scope="col">Nif       </th>
+                <th scope="col">Nombre       </th>
+                <th scope="col">apellido 1       </th>
+                <th scope="col">apellio 2       </th>
+                <th scope="col">codigo_departamento       </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">id</th>
+                <td>{{empleado.codigo}}</td>
+                <td>{{empleado.nif}}</td>
+                <td>{{empleado.nombre}}</td>
+                <td>{{empleado.apellido_1}}</td>
+                <td>{{empleado.apellid_2}}</td>
+                <td>{{empleado.codigo_departamento}}</td>
+              </tr>
+            </tbody>
+        </table>
+        
+        <form action="{% url 'delete' empleado.id %}" method="POST">
+            {% csrf_token %}
+            <button>Eliminar</button>
+        </form>
+        <form action="{% url 'editar' empleado.id %}" method="POST">
+            {% csrf_token %}
+            <h1>Ingrese el siguiente formulario para editar el usuario</h1>
+            <input type="int" name="codigo" placeholder="Esribe tu codigo">
+            <input type="text" name="nif" placeholder="Esribe tu nif">
+            <input type="text" name="nombre" placeholder="Esribe tu nombre">
+            <input type="text" name="apellido_1" placeholder="Esribe tu primer apellido">
+            <input type="text" name="apellid_2" placeholder="Esribe tu segundo apellido">
+            <input type="int" name="codigo_departamento" placeholder="Esribe tu codigo de apartamento">
+            <button>Editar</button>
+        </form>
+    </div>
+
+    {% empty %}
+        <h1>No hay empleados</h1>
+    {% endfor %}
+</body>
+</html>
